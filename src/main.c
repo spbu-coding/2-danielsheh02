@@ -58,11 +58,14 @@ long long int *input_numbers(long long int left_border, long long int right_bord
 
 int check_borders(long long int left_border, long long int right_border) {
     if (left_border == right_border) {
-        error("Borders must not be equal\n");
+        error("Borders must not be equal or they cannot contain anything other than numbers\n");
         return 1;
     }
-    if (left_border == 0 || right_border == 0) {
-        printf("Ignore one of border ");
+    if (left_border == 0) {
+        printf("Ignore left border ");
+        return 0;
+    } else if (right_border == 0) {
+        printf("Ignore right border ");
         return 0;
     }
     if (left_border > right_border) {
@@ -125,7 +128,7 @@ int main(int argc, char **argv) {
         }
     }
     if (check_borders(left_border, right_border)) {
-        return 1;
+        return -4;
     }
     long long int *array_of_numbers = input_numbers(left_border, right_border);
     if (!array_of_numbers) {
