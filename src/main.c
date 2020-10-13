@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <getopt.h>
 
-
 #define error(...) (fprintf(stderr, __VA_ARGS__))
 #define MAX_NUMBERS_ARRAY 100
 int size_array_of_numbers = 0;
@@ -13,7 +12,7 @@ void free_array_of_numbers(long long int *array_of_numbers) {
 
 extern void sorted_of_numbers(long long int *array_of_numbers, int size_array_of_numbers);
 
-long long int *input_numbers(long long int left_border, long long int right_border) {
+long long int *input_numbers(long long int left_border, long long int right_border, int invalid_parameter, int argc) {
     long long int number;
     char space = ' ';
     long long int *array_of_numbers = malloc(MAX_NUMBERS_ARRAY * sizeof(long long int));
@@ -29,26 +28,28 @@ long long int *input_numbers(long long int left_border, long long int right_bord
     }
     while (space != '\n') {
         scanf("%lld%c", &number, &space);
-        if (left_border == 0) {
-            if ((number >= right_border)) {
-                error ("%lld ", number);
-            } else {
-                array_of_numbers[size_array_of_numbers] = number;
-                size_array_of_numbers++;
+        if ((invalid_parameter == 1)||(argc==2)) {
+            if (left_border == 0) {
+                if ((number >= right_border)) {
+                    error ("%lld ", number);
+                } else {
+                    array_of_numbers[size_array_of_numbers] = number;
+                    size_array_of_numbers++;
+                }
+            } else if (right_border == 0) {
+                if ((number <= left_border)) {
+                    printf("%lld ", number);
+                } else {
+                    array_of_numbers[size_array_of_numbers] = number;
+                    size_array_of_numbers++;
+                }
             }
-        } else if (right_border == 0) {
-            if ((number <= left_border)) {
-                printf("%lld ", number);
-            } else {
-                array_of_numbers[size_array_of_numbers] = number;
-                size_array_of_numbers++;
-            }
-        } else if ((number > left_border) && (number < right_border)) {
+        }else if ((number > left_border) && (number < right_border)) {
             array_of_numbers[size_array_of_numbers] = number;
             size_array_of_numbers++;
-        } else if ((number >= right_border)) {
+        }else if ((number >= right_border)) {
             error ("%lld ", number);
-        } else if ((number <= left_border)) {
+        }else if ((number <= left_border)) {
             printf("%lld ", number);
         }
     }
@@ -56,26 +57,8 @@ long long int *input_numbers(long long int left_border, long long int right_bord
     return array_of_numbers;
 }
 
-int check_borders(long long int left_border, long long int right_border) {
-    if (left_border == right_border) {
-        error("Borders must not be equal or they cannot contain anything other than numbers\n");
-        return 1;
-    }
-    if (left_border == 0) {
-        printf("Ignore left border ");
-        return 0;
-    } else if (right_border == 0) {
-        printf("Ignore right border ");
-        return 0;
-    }
-    if (left_border > right_border) {
-        error("Right border (to) must be greater than left(from)\n");
-        return 1;
-    }
-    return 0;
-}
-
 int main(int argc, char **argv) {
+    int invalid_parameter = 0;
     int diff_count = 0;
     char c = 0;
     int rez;
@@ -123,14 +106,15 @@ int main(int argc, char **argv) {
             case '?':
             default: {
                 printf("found unknown option\n");
+                invalid_parameter++;
                 break;
             }
         }
     }
-    if (check_borders(left_border, right_border)) {
+    if (invalid_parameter == 2) {
         return -4;
     }
-    long long int *array_of_numbers = input_numbers(left_border, right_border);
+    long long int *array_of_numbers = input_numbers(left_border, right_border, invalid_parameter,argc);
     if (!array_of_numbers) {
         return 1;
     }
@@ -151,7 +135,6 @@ int main(int argc, char **argv) {
             diff_count++;
         }
     }
-
     free_array_of_numbers(array_of_numbers);
     free_array_of_numbers(old_array_of_numbers);
     return diff_count;
