@@ -11,7 +11,7 @@ void free_array_of_numbers(long long int *array_of_numbers) {
     free(array_of_numbers);
 }
 
-void sorted_of_numbers(long long int *array_of_numbers, int size_array_of_numbers);
+extern void sorted_of_numbers(long long int *array_of_numbers, int size_array_of_numbers);
 
 long long int *input_numbers(long long int left_border, long long int right_border) {
     long long int number;
