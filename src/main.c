@@ -12,7 +12,8 @@ void free_array_of_numbers(long long int *array_of_numbers) {
 
 extern void sorted_of_numbers(long long int *array_of_numbers, int size_array_of_numbers);
 
-long long int *input_numbers(long long int left_border, long long int right_border, int invalid_parameter, int argc) {
+long long int *input_numbers(long long int left_border, long long int right_border, int invalid_parameter, int argc,
+                             int availability_valid_parameter) {
     long long int number;
     char space = ' ';
     long long int *array_of_numbers = malloc(MAX_NUMBERS_ARRAY * sizeof(long long int));
@@ -28,7 +29,7 @@ long long int *input_numbers(long long int left_border, long long int right_bord
     }
     while (space != '\n') {
         scanf("%lld%c", &number, &space);
-        if ((invalid_parameter == 1) || (argc == 2)) {
+        if ((invalid_parameter == 1) || (availability_valid_parameter == 1)) {
             if (left_border == 0) {
                 if ((number >= right_border)) {
                     error ("%lld ", number);
@@ -44,8 +45,7 @@ long long int *input_numbers(long long int left_border, long long int right_bord
                     size_array_of_numbers++;
                 }
             }
-        }
-        if ((invalid_parameter != 1) && (argc != 2)) {
+        } else if ((invalid_parameter != 1)  && (availability_valid_parameter != 1)) {
             if ((number > left_border) && (number < right_border)) {
                 array_of_numbers[size_array_of_numbers] = number;
                 size_array_of_numbers++;
@@ -108,6 +108,7 @@ int main(int argc, char **argv) {
                     printf("found 'to' without value\n");
                 }
                 right_border = strtoll(optarg, NULL, 10);
+                printf("%d", right_border);
                 availability_valid_parameter++;
                 break;
             }
@@ -119,11 +120,11 @@ int main(int argc, char **argv) {
             }
         }
     }
-
     if ((invalid_parameter == 2) || (availability_valid_parameter == 0) || (option_index < 0)) {
         return -4;
     }
-    long long int *array_of_numbers = input_numbers(left_border, right_border, invalid_parameter, argc);
+    long long int *array_of_numbers = input_numbers(left_border, right_border, invalid_parameter, argc,
+                                                    availability_valid_parameter);
     if (!array_of_numbers) {
         return -10;
     }
