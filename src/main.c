@@ -28,7 +28,7 @@ long long int *input_numbers(long long int left_border, long long int right_bord
     }
     while (space != '\n') {
         scanf("%lld%c", &number, &space);
-        if ((invalid_parameter == 1)||(argc==2)) {
+        if ((invalid_parameter == 1) || (argc == 2)) {
             if (left_border == 0) {
                 if ((number >= right_border)) {
                     error ("%lld ", number);
@@ -45,7 +45,7 @@ long long int *input_numbers(long long int left_border, long long int right_bord
                 }
             }
         }
-        if((invalid_parameter != 1)&&(argc!=2)) {
+        if ((invalid_parameter != 1) && (argc != 2)) {
             if ((number > left_border) && (number < right_border)) {
                 array_of_numbers[size_array_of_numbers] = number;
                 size_array_of_numbers++;
@@ -63,11 +63,12 @@ long long int *input_numbers(long long int left_border, long long int right_bord
 }
 
 int main(int argc, char **argv) {
+    int availability_valid_parameter = 0;
     int invalid_parameter = 0;
     int diff_count = 0;
     char c = 0;
     int rez;
-    int option_index = 0;
+    int option_index = -1;
     long long int left_border = 0;
     long long int right_border = 0;
     if (argc < 2) {
@@ -94,6 +95,7 @@ int main(int argc, char **argv) {
                     printf("found 'from' without value\n");
                 }
                 left_border = strtoll(optarg, NULL, 10);
+                availability_valid_parameter++;
                 break;
             }
             case 't': {
@@ -106,6 +108,7 @@ int main(int argc, char **argv) {
                     printf("found 'to' without value\n");
                 }
                 right_border = strtoll(optarg, NULL, 10);
+                availability_valid_parameter++;
                 break;
             }
             case '?':
@@ -116,10 +119,11 @@ int main(int argc, char **argv) {
             }
         }
     }
-    if (invalid_parameter == 2) {
+
+    if ((invalid_parameter == 2) || (availability_valid_parameter == 0) || (option_index < 0)) {
         return -4;
     }
-    long long int *array_of_numbers = input_numbers(left_border, right_border, invalid_parameter,argc);
+    long long int *array_of_numbers = input_numbers(left_border, right_border, invalid_parameter, argc);
     if (!array_of_numbers) {
         return -10;
     }
@@ -144,4 +148,3 @@ int main(int argc, char **argv) {
     free_array_of_numbers(old_array_of_numbers);
     return diff_count;
 }
-
