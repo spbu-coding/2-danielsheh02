@@ -139,3 +139,4 @@ int main(int argc, char **argv) {
     free_array_of_numbers(old_array_of_numbers);
     return diff_count;
 }
+
