@@ -108,7 +108,6 @@ int main(int argc, char **argv) {
                     printf("found 'to' without value\n");
                 }
                 right_border = strtoll(optarg, NULL, 10);
-                printf("%d", right_border);
                 availability_valid_parameter++;
                 break;
             }
