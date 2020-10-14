@@ -1,18 +1,18 @@
 	.file	"sort.c"
 	.text
 	.globl	_sorted_of_numbers
-	.def	_sorted_of_numbers;	.scl	2;	.type	32;	.endef
+
 _sorted_of_numbers:
 LFB0:
 	.cfi_startproc
-	pushl	%ebp
+
 	.cfi_def_cfa_offset 8
 	.cfi_offset 5, -8
 	movl	%esp, %ebp
 	.cfi_def_cfa_register 5
-	pushl	%ebx
+
 	subl	$20, %esp
-	.cfi_offset 3, -12
+
 	movl	$0, -12(%ebp)
 	jmp	L2
 L6:
@@ -83,9 +83,9 @@ L2:
 	nop
 	nop
 	addl	$20, %esp
-	popl	%ebx
+
 	.cfi_restore 3
-	popl	%ebp
+
 	.cfi_restore 5
 	.cfi_def_cfa 4, 4
 	ret
