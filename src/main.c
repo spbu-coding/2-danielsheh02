@@ -79,16 +79,16 @@ int main(int argc, char **argv) {
     }
     const char *short_options = "f::t::";
     const struct option long_options[] = {
-            {"from", optional_argument, NULL, 'f'},
-            {"to",   optional_argument, NULL, 't'},
+            {"from", optional_argument, NULL, '1'},
+            {"to",   optional_argument, NULL, '2'},
             {NULL,   0,                 NULL, 0}
     };
     while ((rez = getopt_long(argc, argv, short_options, long_options, &option_index)) != -1) {
         switch (rez) {
-            case 'f': {
+            case '1': {
                 if (c == 0) {
-                    c = 'f';
-                } else if (c == 'f') {
+                    c = '1';
+                } else if (c == '1') {
                     return -3;
                 }
                 if (optarg == NULL) {
@@ -98,10 +98,10 @@ int main(int argc, char **argv) {
                 availability_valid_parameter++;
                 break;
             }
-            case 't': {
+            case '2': {
                 if (c == 0) {
-                    c = 't';
-                } else if (c == 't') {
+                    c = '2';
+                } else if (c == '2') {
                     return -3;
                 }
                 if (optarg == NULL) {
