@@ -28,7 +28,10 @@ long long int *input_numbers(long long int left_border, long long int right_bord
         return NULL;
     }
     while (space != '\n') {
-        scanf("%lld%c", &number, &space);
+        if(scanf("%lld%c", &number, &space)!=1){
+            error("Cannot read number\n");
+            return (long long int *) 1;
+        }
         if (availability_valid_parameter == 1) {
             if ((left_border == 0) && (right_border != 0)) {
                 if ((number >= right_border)) {
