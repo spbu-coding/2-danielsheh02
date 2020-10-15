@@ -28,9 +28,9 @@ long long int *input_numbers(long long int left_border, long long int right_bord
         return NULL;
     }
     while (space != '\n') {
-        if(scanf("%lld%c", &number, &space)!=1){
+        if (scanf("%lld%c", &number, &space) != 2) {
             error("Cannot read number\n");
-            return (long long int *) 1;
+            return (long long int *) 0;
         }
         if (availability_valid_parameter == 1) {
             if ((left_border == 0) && (right_border != 0)) {
@@ -42,7 +42,10 @@ long long int *input_numbers(long long int left_border, long long int right_bord
                 }
             } else if ((right_border == 0) && (left_border != 0)) {
                 if ((number <= left_border)) {
-                    printf("%lld ", number);
+                    if (printf("%lld ", number) < 0) {
+                        error("Cannot write to stdout\n");
+                        return NULL;
+                    }
                 } else {
                     array_of_numbers[size_array_of_numbers] = number;
                     size_array_of_numbers++;
@@ -50,7 +53,10 @@ long long int *input_numbers(long long int left_border, long long int right_bord
             } else {
                 if (option_index == 0) {
                     if ((number <= left_border)) {
-                        printf("%lld ", number);
+                        if (printf("%lld ", number) < 0) {
+                            error("Cannot write to stdout\n");
+                            return NULL;
+                        }
                     } else {
                         array_of_numbers[size_array_of_numbers] = number;
                         size_array_of_numbers++;
@@ -73,7 +79,10 @@ long long int *input_numbers(long long int left_border, long long int right_bord
                 error ("%lld ", number);
             }
             if ((number <= left_border)) {
-                printf("%lld ", number);
+                if (printf("%lld ", number) < 0) {
+                    error("Cannot write to stdout\n");
+                    return NULL;
+                }
             }
         }
     }
