@@ -27,7 +27,7 @@ long long int *input_numbers(long long int left_border, long long int right_bord
         error("Cannot write to stdout\n");
         return NULL;
     }
-    while (space != '\n') {
+    while (space == ' ') {
         scanf("%lld%c", &number, &space);
         if (availability_valid_parameter == 1) {
             if ((left_border == 0) && (right_border != 0)) {
