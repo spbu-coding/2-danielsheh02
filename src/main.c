@@ -32,14 +32,14 @@ long long int *input_numbers(long long int left_border, long long int right_bord
         if (availability_valid_parameter == 1) {
             if ((left_border == 0) && (right_border != 0)) {
                 if ((number >= right_border)) {
-                    error ("%lld ", number);
+                    fprintf(stderr,"%lld ", number);
                 } else {
                     array_of_numbers[size_array_of_numbers] = number;
                     size_array_of_numbers++;
                 }
             } else if ((right_border == 0) && (left_border != 0)) {
                 if ((number <= left_border)) {
-                    printf("%lld ", number);
+                    fprintf(stdout,"%lld ", number);
                 } else {
                     array_of_numbers[size_array_of_numbers] = number;
                     size_array_of_numbers++;
@@ -47,14 +47,14 @@ long long int *input_numbers(long long int left_border, long long int right_bord
             } else {
                 if (option_index == 0) {
                     if ((number <= left_border)) {
-                        printf("%lld ", number);
+                        fprintf(stdout,"%lld ", number);
                     } else {
                         array_of_numbers[size_array_of_numbers] = number;
                         size_array_of_numbers++;
                     }
                 } else if (option_index == 1) {
                     if ((number >= right_border)) {
-                        error ("%lld ", number);
+                        fprintf(stderr,"%lld ", number);
                     } else {
                         array_of_numbers[size_array_of_numbers] = number;
                         size_array_of_numbers++;
@@ -67,14 +67,13 @@ long long int *input_numbers(long long int left_border, long long int right_bord
                 size_array_of_numbers++;
             }
             if ((number >= right_border)) {
-                error ("%lld ", number);
+                fprintf(stderr,"%lld ", number);
             }
             if ((number <= left_border)) {
-                printf("%lld ", number);
+                fprintf(stdout,"%lld ", number);
             }
         }
     }
-    printf("\n");
     return array_of_numbers;
 }
 
