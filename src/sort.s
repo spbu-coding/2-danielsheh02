@@ -1,85 +1,40 @@
 	.file	"sort.c"
 	.text
+	.p2align 4
 	.globl	sorted_of_numbers
 	.type	sorted_of_numbers, @function
 sorted_of_numbers:
 .LFB0:
 	.cfi_startproc
 	endbr64
-	pushq	%rbp
-	.cfi_def_cfa_offset 16
-	.cfi_offset 6, -16
-	movq	%rsp, %rbp
-	.cfi_def_cfa_register 6
-	movq	%rdi, -24(%rbp)
-	movl	%esi, -28(%rbp)
-	movl	$0, -16(%rbp)
-	jmp	.L2
-.L6:
-	movl	$0, -12(%rbp)
-	jmp	.L3
-.L5:
-	movl	-12(%rbp), %eax
-	cltq
-	leaq	0(,%rax,8), %rdx
-	movq	-24(%rbp), %rax
-	addq	%rdx, %rax
-	movq	(%rax), %rdx
-	movl	-12(%rbp), %eax
-	cltq
-	addq	$1, %rax
-	leaq	0(,%rax,8), %rcx
-	movq	-24(%rbp), %rax
-	addq	%rcx, %rax
-	movq	(%rax), %rax
-	cmpq	%rax, %rdx
-	jle	.L4
-	movl	-12(%rbp), %eax
-	cltq
-	leaq	0(,%rax,8), %rdx
-	movq	-24(%rbp), %rax
-	addq	%rdx, %rax
-	movq	(%rax), %rax
-	movq	%rax, -8(%rbp)
-	movl	-12(%rbp), %eax
-	cltq
-	addq	$1, %rax
-	leaq	0(,%rax,8), %rdx
-	movq	-24(%rbp), %rax
-	addq	%rdx, %rax
-	movl	-12(%rbp), %edx
-	movslq	%edx, %rdx
-	leaq	0(,%rdx,8), %rcx
-	movq	-24(%rbp), %rdx
-	addq	%rcx, %rdx
-	movq	(%rax), %rax
-	movq	%rax, (%rdx)
-	movl	-12(%rbp), %eax
-	cltq
-	addq	$1, %rax
-	leaq	0(,%rax,8), %rdx
-	movq	-24(%rbp), %rax
-	addq	%rax, %rdx
-	movq	-8(%rbp), %rax
-	movq	%rax, (%rdx)
-.L4:
-	addl	$1, -12(%rbp)
+	leal	-1(%rsi), %edx
+	testl	%edx, %edx
+	jle	.L1
+	leaq	8(%rdi), %r9
+	.p2align 4,,10
+	.p2align 3
 .L3:
-	movl	-28(%rbp), %eax
-	subl	-16(%rbp), %eax
-	subl	$1, %eax
-	cmpl	%eax, -12(%rbp)
-	jl	.L5
-	addl	$1, -16(%rbp)
-.L2:
-	movl	-28(%rbp), %eax
-	subl	$1, %eax
-	cmpl	%eax, -16(%rbp)
-	jl	.L6
-	nop
-	nop
-	popq	%rbp
-	.cfi_def_cfa 7, 8
+	subl	$1, %edx
+	movq	%rdi, %rax
+	movq	%rdx, %r8
+	leaq	(%r9,%rdx,8), %rsi
+	.p2align 4,,10
+	.p2align 3
+.L5:
+	movq	(%rax), %rdx
+	movq	8(%rax), %rcx
+	cmpq	%rcx, %rdx
+	jle	.L4
+	movq	%rcx, (%rax)
+	movq	%rdx, 8(%rax)
+.L4:
+	addq	$8, %rax
+	cmpq	%rsi, %rax
+	jne	.L5
+	movl	%r8d, %edx
+	testl	%r8d, %r8d
+	jne	.L3
+.L1:
 	ret
 	.cfi_endproc
 .LFE0:
