@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
     if (argc > 3) {
         return -2;
     }
-    const char *short_options = "f::t::";
+    const char *short_options = "";
     const struct option long_options[] = {
             {"from", optional_argument, NULL, '1'},
             {"to",   optional_argument, NULL, '2'},
@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
             }
         }
     }
-    if ((invalid_parameter == 2) || (availability_valid_parameter == 0) || (option_index < 0)) {
+    if ((invalid_parameter == 2) || (availability_valid_parameter == 0) ) {
         return -4;
     }
     long long int *array_of_numbers = input_numbers(left_border, right_border, availability_valid_parameter,
