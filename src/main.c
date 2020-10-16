@@ -30,7 +30,7 @@ long long int *input_numbers(long long int left_border, long long int right_bord
     while (space != '\n') {
         if (scanf("%lld%c", &number, &space) != 2) {
             error("Cannot read number\n");
-            return (long long int *) 0;
+            return NULL;
         }
         if (availability_valid_parameter == 1) {
             if ((left_border == 0) && (right_border != 0)) {
@@ -134,7 +134,10 @@ int main(int argc, char **argv) {
                     return -3;
                 }
                 if (optarg == NULL) {
-                    printf("found 'to' without value\n");
+                    if (printf("found 'to' without value\n") < 0) {
+                        error("Cannot write to stdout\n");
+                        return -10;
+                    }
                 }
                 right_border = strtoll(optarg, NULL, 10);
                 availability_valid_parameter++;
@@ -142,13 +145,16 @@ int main(int argc, char **argv) {
             }
             case '?':
             default: {
-                printf("found unknown option\n");
+                if (printf("found unknown option\n") < 0) {
+                    error("Cannot write to stdout\n");
+                    return -10;
+                }
                 invalid_parameter++;
                 break;
             }
         }
     }
-    if ((invalid_parameter == 2) || (availability_valid_parameter == 0) ) {
+    if ((invalid_parameter == 2) || (availability_valid_parameter == 0)) {
         return -4;
     }
     long long int *array_of_numbers = input_numbers(left_border, right_border, availability_valid_parameter,
