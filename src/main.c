@@ -14,7 +14,8 @@ extern void sorted_of_numbers(long long int *array_of_numbers, int size_array_of
 
 long long int *input_numbers(long long int left_border, long long int right_border,
                              int availability_valid_parameter, int option_index) {
-    long long int number;
+    long long int number, array_std_out[100], array_std_err[100];
+    int std_out_size = 0, std_err_size = 0;
     char space = ' ';
     long long int *array_of_numbers = malloc(MAX_NUMBERS_ARRAY * sizeof(long long int));
     if (!array_of_numbers) {
@@ -35,17 +36,16 @@ long long int *input_numbers(long long int left_border, long long int right_bord
         if (availability_valid_parameter == 1) {
             if ((left_border == 0) && (right_border != 0)) {
                 if ((number >= right_border)) {
-                    error ("%lld ", number);
+                    array_std_err[std_err_size] = number;
+                    std_err_size++;
                 } else {
                     array_of_numbers[size_array_of_numbers] = number;
                     size_array_of_numbers++;
                 }
             } else if ((right_border == 0) && (left_border != 0)) {
                 if ((number <= left_border)) {
-                    if (printf("%lld ", number) < 0) {
-                        error("Cannot write to stdout\n");
-                        return NULL;
-                    }
+                    array_std_out[std_out_size] = number;
+                    std_out_size++;
                 } else {
                     array_of_numbers[size_array_of_numbers] = number;
                     size_array_of_numbers++;
@@ -53,17 +53,16 @@ long long int *input_numbers(long long int left_border, long long int right_bord
             } else {
                 if (option_index == 0) {
                     if ((number <= left_border)) {
-                        if (printf("%lld ", number) < 0) {
-                            error("Cannot write to stdout\n");
-                            return NULL;
-                        }
+                        array_std_out[std_out_size] = number;
+                        std_out_size++;
                     } else {
                         array_of_numbers[size_array_of_numbers] = number;
                         size_array_of_numbers++;
                     }
                 } else if (option_index == 1) {
                     if ((number >= right_border)) {
-                        error ("%lld ", number);
+                        array_std_err[std_err_size] = number;
+                        std_err_size++;
                     } else {
                         array_of_numbers[size_array_of_numbers] = number;
                         size_array_of_numbers++;
@@ -76,17 +75,21 @@ long long int *input_numbers(long long int left_border, long long int right_bord
                 size_array_of_numbers++;
             }
             if ((number >= right_border)) {
-                error ("%lld ", number);
+                array_std_err[std_err_size] = number;
+                std_err_size++;
             }
             if ((number <= left_border)) {
-                if (printf("%lld ", number) < 0) {
-                    error("Cannot write to stdout\n");
-                    return NULL;
-                }
+                array_std_out[std_out_size] = number;
+                std_out_size++;
             }
         }
     }
-    printf("\n");
+    for (int i=0;i<std_err_size;i++){
+        printf("%lld ", array_std_err[i]);
+    }
+    for (int i=0;i<std_out_size;i++){
+        error("%lld ", array_std_out[i]);
+    }
     return array_of_numbers;
 }
 
@@ -125,7 +128,7 @@ int main(int argc, char **argv) {
                         error("Cannot write to stdout\n");
                         return -10;
                     }
-                    optarg="0";
+                    optarg = "0";
                 }
                 left_border = strtoll(optarg, NULL, 10);
                 availability_valid_parameter++;
@@ -142,7 +145,7 @@ int main(int argc, char **argv) {
                         error("Cannot write to stdout\n");
                         return -10;
                     }
-                    optarg="0";
+                    optarg = "0";
                 }
                 right_border = strtoll(optarg, NULL, 10);
                 availability_valid_parameter++;
