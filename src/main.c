@@ -85,10 +85,10 @@ long long int *input_numbers(long long int left_border, long long int right_bord
         }
     }
     for (int i=0;i<std_out_size;i++){
-        error("%lld ", array_std_out[i]);
+        fprintf(stdout,"%lld ", array_std_out[i]);
     }
     for (int i=0;i<std_err_size;i++){
-        printf("%lld ", array_std_err[i]);
+        fprintf(stderr,"%lld ", array_std_err[i]);
     }
     return array_of_numbers;
 }
