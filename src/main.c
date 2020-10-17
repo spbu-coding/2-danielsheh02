@@ -92,11 +92,11 @@ long long int *input_numbers(long long int left_border, long long int right_bord
             }
         }
     }
-    for (int i=0;i<std_out_size;i++){
-        fprintf(stdout,"%lld ", array_std_out[i]);
+    for (int i = 0; i < std_out_size; i++) {
+        fprintf(stdout, "%lld ", array_std_out[i]);
     }
-    for (int i=0;i<std_err_size;i++){
-        fprintf(stderr,"%lld ", array_std_err[i]);
+    for (int i = 0; i < std_err_size; i++) {
+        fprintf(stderr, "%lld ", array_std_err[i]);
     }
     free_array_of_numbers(array_std_out);
     free_array_of_numbers(array_std_err);
@@ -163,10 +163,6 @@ int main(int argc, char **argv) {
             }
             case '?':
             default: {
-                if (printf("found unknown option\n") < 0) {
-                    error("Cannot write to stdout\n");
-                    return -10;
-                }
                 invalid_parameter++;
                 break;
             }
@@ -201,4 +197,3 @@ int main(int argc, char **argv) {
     free_array_of_numbers(old_array_of_numbers);
     return diff_count;
 }
-
