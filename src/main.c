@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
     if (argc > 3) {
         return -2;
     }
-    const char *short_options = "";
+    const char *short_options = "f::t::";
     const struct option long_options[] = {
             {"from", optional_argument, NULL, '1'},
             {"to",   optional_argument, NULL, '2'},
@@ -121,7 +121,11 @@ int main(int argc, char **argv) {
                     return -3;
                 }
                 if (optarg == NULL) {
-                    printf("found 'from' without value\n");
+                    if (printf("found 'from' without value\n") < 0) {
+                        error("Cannot write to stdout\n");
+                        return -10;
+                    }
+                    optarg="0";
                 }
                 left_border = strtoll(optarg, NULL, 10);
                 availability_valid_parameter++;
@@ -138,6 +142,7 @@ int main(int argc, char **argv) {
                         error("Cannot write to stdout\n");
                         return -10;
                     }
+                    optarg="0";
                 }
                 right_border = strtoll(optarg, NULL, 10);
                 availability_valid_parameter++;
