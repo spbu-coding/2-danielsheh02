@@ -24,10 +24,6 @@ long long int *input_numbers(long long int left_border, long long int right_bord
         return NULL;
     }
 
-    if (printf("Enter numbers in sequence ") < 0) {
-        error("Cannot write to stdout\n");
-        return NULL;
-    }
     while (space != '\n') {
         if (scanf("%lld%c", &number, &space) != 2) {
             error("Cannot read number\n");
@@ -109,7 +105,7 @@ int main(int argc, char **argv) {
     if (argc > 3) {
         return -2;
     }
-    const char *short_options = "f::t::";
+    const char *short_options = " ";
     const struct option long_options[] = {
             {"from", optional_argument, NULL, '1'},
             {"to",   optional_argument, NULL, '2'},
