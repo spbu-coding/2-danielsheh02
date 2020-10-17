@@ -14,12 +14,24 @@ extern void sorted_of_numbers(long long int *array_of_numbers, int size_array_of
 
 long long int *input_numbers(long long int left_border, long long int right_border,
                              int availability_valid_parameter, int option_index) {
-    long long int number, array_std_out[100], array_std_err[100];
+    long long int number;
     int std_out_size = 0, std_err_size = 0;
     char space = ' ';
     long long int *array_of_numbers = malloc(MAX_NUMBERS_ARRAY * sizeof(long long int));
     if (!array_of_numbers) {
         free_array_of_numbers(array_of_numbers);
+        error("Cannot allocate memory for array int in experiment\n");
+        return NULL;
+    }
+    long long int *array_std_out = malloc(MAX_NUMBERS_ARRAY * sizeof(long long int));
+    if (!array_std_out) {
+        free_array_of_numbers(array_std_out);
+        error("Cannot allocate memory for array int in experiment\n");
+        return NULL;
+    }
+    long long int *array_std_err = malloc(MAX_NUMBERS_ARRAY * sizeof(long long int));
+    if (!array_std_err) {
+        free_array_of_numbers(array_std_err);
         error("Cannot allocate memory for array int in experiment\n");
         return NULL;
     }
@@ -86,6 +98,8 @@ long long int *input_numbers(long long int left_border, long long int right_bord
     for (int i=0;i<std_err_size;i++){
         fprintf(stderr,"%lld ", array_std_err[i]);
     }
+    free_array_of_numbers(array_std_out);
+    free_array_of_numbers(array_std_err);
     return array_of_numbers;
 }
 
@@ -187,3 +201,4 @@ int main(int argc, char **argv) {
     free_array_of_numbers(old_array_of_numbers);
     return diff_count;
 }
+
