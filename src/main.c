@@ -92,11 +92,11 @@ long long int *input_numbers(long long int left_border, long long int right_bord
             }
         }
     }
-    for (int i = 0; i < std_out_size; i++) {
-        fprintf(stdout, "%lld ", array_std_out[i]);
+    for (int i=0;i<std_out_size;i++){
+        fprintf(stdout,"%lld ", array_std_out[i]);
     }
-    for (int i = 0; i < std_err_size; i++) {
-        fprintf(stderr, "%lld ", array_std_err[i]);
+    for (int i=0;i<std_err_size;i++){
+        fprintf(stderr,"%lld ", array_std_err[i]);
     }
     free_array_of_numbers(array_std_out);
     free_array_of_numbers(array_std_err);
@@ -125,6 +125,7 @@ int main(int argc, char **argv) {
             {"to",   optional_argument, NULL, '2'},
             {NULL,   0,                 NULL, 0}
     };
+    optind=1;
     while ((rez = getopt_long(argc, argv, short_options, long_options, &option_index)) != -1) {
         switch (rez) {
             case '1': {
