@@ -104,7 +104,6 @@ long long int *input_numbers(long long int left_border, long long int right_bord
 
 int main(int argc, char **argv) {
     int size_array_of_numbers = 0;
-    optind = 1;
     opterr = 0;
     int availability_valid_parameter = 0;
     int invalid_parameter = 0;
