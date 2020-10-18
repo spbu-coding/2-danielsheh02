@@ -12,7 +12,7 @@ void free_array_of_numbers(long long int *array_of_numbers) {
 extern void sorted_of_numbers(long long int *array_of_numbers, int size_array_of_numbers);
 
 long long int *input_numbers(long long int left_border, long long int right_border,
-                             int availability_valid_parameter, int option_index,int *size_array_of_numbers) {
+                             int availability_valid_parameter, int option_index, int *size_array_of_numbers) {
     long long int number;
     int std_out_size = 0, std_err_size = 0;
     char space = ' ';
@@ -47,7 +47,7 @@ long long int *input_numbers(long long int left_border, long long int right_bord
                     std_err_size++;
                 } else {
                     array_of_numbers[*size_array_of_numbers] = number;
-                    *size_array_of_numbers=*size_array_of_numbers+1;
+                    *size_array_of_numbers = *size_array_of_numbers + 1;
                 }
             } else if ((right_border == 0) && (left_border != 0)) {
                 if ((number <= left_border)) {
@@ -55,7 +55,7 @@ long long int *input_numbers(long long int left_border, long long int right_bord
                     std_out_size++;
                 } else {
                     array_of_numbers[*size_array_of_numbers] = number;
-                    *size_array_of_numbers=*size_array_of_numbers+1;
+                    *size_array_of_numbers = *size_array_of_numbers + 1;
                 }
             } else {
                 if (option_index == 0) {
@@ -64,7 +64,7 @@ long long int *input_numbers(long long int left_border, long long int right_bord
                         std_out_size++;
                     } else {
                         array_of_numbers[*size_array_of_numbers] = number;
-                        *size_array_of_numbers=*size_array_of_numbers+1;
+                        *size_array_of_numbers = *size_array_of_numbers + 1;
                     }
                 } else if (option_index == 1) {
                     if ((number >= right_border)) {
@@ -72,14 +72,14 @@ long long int *input_numbers(long long int left_border, long long int right_bord
                         std_err_size++;
                     } else {
                         array_of_numbers[*size_array_of_numbers] = number;
-                        *size_array_of_numbers=*size_array_of_numbers+1;
+                        *size_array_of_numbers = *size_array_of_numbers + 1;
                     }
                 }
             }
         } else {
             if ((number > left_border) && (number < right_border)) {
                 array_of_numbers[*size_array_of_numbers] = number;
-                *size_array_of_numbers=*size_array_of_numbers+1;
+                *size_array_of_numbers = *size_array_of_numbers + 1;
             }
             if ((number >= right_border)) {
                 array_std_err[std_err_size] = number;
@@ -91,11 +91,11 @@ long long int *input_numbers(long long int left_border, long long int right_bord
             }
         }
     }
-    for (int i=0;i<std_out_size;i++){
-        fprintf(stdout,"%lld ", array_std_out[i]);
+    for (int i = 0; i < std_out_size; i++) {
+        fprintf(stdout, "%lld ", array_std_out[i]);
     }
-    for (int i=0;i<std_err_size;i++){
-        fprintf(stderr,"%lld ", array_std_err[i]);
+    for (int i = 0; i < std_err_size; i++) {
+        fprintf(stderr, "%lld ", array_std_err[i]);
     }
     free_array_of_numbers(array_std_out);
     free_array_of_numbers(array_std_err);
@@ -104,6 +104,7 @@ long long int *input_numbers(long long int left_border, long long int right_bord
 
 int main(int argc, char **argv) {
     int size_array_of_numbers = 0;
+    optind = 1;
     opterr = 0;
     int availability_valid_parameter = 0;
     int invalid_parameter = 0;
@@ -128,7 +129,6 @@ int main(int argc, char **argv) {
     while ((rez = getopt_long(argc, argv, short_options, long_options, &option_index)) != -1) {
         switch (rez) {
             case '1': {
-                printf("%d ",optind);
                 if (name == 0) {
                     name = '1';
                 } else if (name == '1') {
@@ -146,7 +146,6 @@ int main(int argc, char **argv) {
                 break;
             }
             case '2': {
-                printf("%d ",optind);
                 if (name == 0) {
                     name = '2';
                 } else if (name == '2') {
@@ -174,7 +173,7 @@ int main(int argc, char **argv) {
         return -4;
     }
     long long int *array_of_numbers = input_numbers(left_border, right_border, availability_valid_parameter,
-                                                    option_index,&size_array_of_numbers);
+                                                    option_index, &size_array_of_numbers);
     if (!array_of_numbers) {
         return -10;
     }
@@ -184,7 +183,6 @@ int main(int argc, char **argv) {
         error("Cannot allocate memory for array int in experiment\n");
         return -10;
     }
-
     for (int i = 0; i < size_array_of_numbers; i++) {
         old_array_of_numbers[i] = array_of_numbers[i];
     }
@@ -194,7 +192,6 @@ int main(int argc, char **argv) {
             diff_count++;
         }
     }
-
     free_array_of_numbers(array_of_numbers);
     free_array_of_numbers(old_array_of_numbers);
     return diff_count;
